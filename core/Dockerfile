@@ -1,0 +1,16 @@
+FROM maven:3.9.6-eclipse-temurin-21-alpine
+
+WORKDIR /core
+COPY . .
+
+# Set environment variables
+ENV MYFOOD_DATASOURCE_URL=$MYFOOD_DATASOURCE_URL \
+    MYFOOD_DATASOURCE_USER=$MYFOOD_DATASOURCE_USER \
+    MYFOOD_DATASOURCE_PASS=$MYFOOD_DATASOURCE_PASS \
+    MAILTRAP_USER=$MAILTRAP_USER \
+    MAILTRAP_PASS=$MAILTRAP_PASS \
+    JWT_SECRET=$JWT_SECRET
+
+RUN mvn clean install -DskipTests
+
+CMD mvn spring-boot:run
